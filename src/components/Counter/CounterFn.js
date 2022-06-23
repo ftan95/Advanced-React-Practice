@@ -1,28 +1,24 @@
 import React, { useEffect, useContext } from 'react';
-// import { useCounterContext } from '../../context/counterContext';
-// import { useCounter } from '../../hooks/useCounter';
 import { useSelector, useDispatch } from 'react-redux';
+import { counterActions } from '../../store/counter';
 
 const CounterFn = (props) => {
     const [title, setTitle] = React.useState("CounterFn");
     const [isAlert, setIsAlert] = React.useState(false)
-    // const [
-    //     counter,
-    //     handleAdd,
-    //     handleSub
-    // ] = useCounterContext()
-    const counter = useSelector(state => state.counter);
+    const counter = useSelector(state => state.counter.counter);
     const dispatch = useDispatch();
     const counterRef = React.useRef(counter)
 
     counterRef.current = counter;
 
     const handleAdd = () => {
-        dispatch({type: 'increment'})
+        // dispatch({type: 'increment'})
+        dispatch(counterActions.increment())
     }
 
     const handleSub = () => {
-        dispatch({type: 'decrement'})
+        // dispatch({type: 'decrement'})
+        dispatch(counterActions.decrement())
     }
 
     const hanldeAlert = () => {

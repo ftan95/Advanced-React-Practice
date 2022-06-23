@@ -1,6 +1,8 @@
 import React from 'react';
 import { getInitStockInfo } from '../../apis/stock.api';
 import { connect } from 'react-redux';
+import { counterActions } from '../../store/counter';
+import { loadActions } from '../../store/load';
 
 class BuyStockClass extends React.Component {
     componentDidMount() {
@@ -43,22 +45,22 @@ class BuyStockClass extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        counter: state.counter,
-        incrementNum: state.incrementNum,
-        decrementNum: state.decrementNum,
-        isLoading: state.isLoading
+        counter: state.counter.counter,
+        incrementNum: state.counter.incrementNum,
+        decrementNum: state.counter.decrementNum,
+        isLoading: state.loading.isLoading
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        increment: () => dispatch({type: 'increment'}),
-        decrement: () => dispatch({type: 'decrement'}),
-        startLoading: () => dispatch({type: 'startLoad'}),
-        endLoading: () => dispatch({type: 'endLoad'}),
-        setOption: (initCounter, incrementNum, decrementNum) => dispatch({
-            type: 'setOption', stock: initCounter, inc: incrementNum, dec: decrementNum
-        })
+        increment: () => dispatch(counterActions.increment()),
+        decrement: () => dispatch(counterActions.decrement()),
+        startLoading: () => dispatch(loadActions.startLoading()),
+        endLoading: () => dispatch(loadActions.endLoading()),
+        setOption: (initCounter, incrementNum, decrementNum) => dispatch(counterActions.setOption({
+            stock: initCounter, inc: incrementNum, dec: decrementNum
+        }))
     }
 }
 

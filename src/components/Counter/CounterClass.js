@@ -1,6 +1,7 @@
 import React from 'react';
 import { withCounter } from "../../hoc/withCounter";
 import { connect } from 'react-redux';
+import { counterActions } from '../../store/counter';
 
 class Counter extends React.Component {
     constructor(props) {
@@ -42,14 +43,14 @@ class Counter extends React.Component {
 // export default CounterContainer;
 const mapStateToProps = state => {
     return {
-        counter: state.counter
+        counter: state.counter.counter
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        increment: () => dispatch({type: 'increment'}),
-        decrement: () => dispatch({type: 'decrement'})
+        increment: () => dispatch(counterActions.increment()),
+        decrement: () => dispatch(counterActions.decrement())
     }
 }
 
