@@ -1,5 +1,6 @@
 import React from 'react';
-import { withCounter } from "../../hoc/withCounter"
+import { withCounter } from "../../hoc/withCounter";
+import { connect } from 'react-redux';
 
 class Counter extends React.Component {
     constructor(props) {
@@ -10,6 +11,14 @@ class Counter extends React.Component {
         this.hanldeAlert = this.hanldeAlert.bind(this);
     }
 
+    handleAdd() {
+        this.props.increment();
+    }
+
+    handleSub() {
+        this.props.decrement();
+    }
+
     hanldeAlert() {
         setTimeout(() => {
             alert(this.props.counter)
@@ -17,18 +26,31 @@ class Counter extends React.Component {
     }
 
     render() {
-        console.log('render class compoennt')
-        console.log("props counter class", this.props)
-        return <section>
-            <header>{this.state.title}:{this.props.counter}</header>
-            <button onClick={this.props.handleAdd} >+</button><button onClick={this.props.handleSub}>-</button>
-            <button onClick={this.hanldeAlert}>Alert after 5 s</button>
-        </section>;
+        return (
+            <section>
+                <header>{this.state.title}:{this.props.counter}</header>
+                <button onClick={this.handleAdd.bind(this)} >+</button><button onClick={this.handleSub.bind(this)}>-</button>
+                <button onClick={this.hanldeAlert}>Alert after 5 s</button>
+            </section>
+        );
     }
 
 }
 
+// const CounterContainer = withCounter(Counter);
 
-const CounterContainer = withCounter(Counter);
+// export default CounterContainer;
+const mapStateToProps = state => {
+    return {
+        counter: state.counter
+    };
+};
 
-export default CounterContainer;
+const mapDispatchToProps = dispatch => {
+    return {
+        increment: () => dispatch({type: 'increment'}),
+        decrement: () => dispatch({type: 'decrement'})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);

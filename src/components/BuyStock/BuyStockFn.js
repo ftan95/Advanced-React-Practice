@@ -1,36 +1,39 @@
 import React, { useEffect } from 'react'
 import { getInitStockInfo } from '../../apis/stock.api'
-import { useCounter } from '../../hooks/useCounter'
-import { useLoading } from '../../hooks/useLoading'
+import { useSelector, useDispatch } from 'react-redux';
 
 const BuyStockFn = () => {
-    const [isLoading, startLoading, endLoading, showLoading] = useLoading(false)
-    const [
-        stockAmount,
-        buyStock,
-        sellStock,
-        setStockOption
-    ] = useCounter()
+    const counter = useSelector(state => state.counter);
+    const isLoading = useSelector(state => state.isLoading);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        startLoading()
+        dispatch({type: 'startLoad'})
         getInitStockInfo().then(option => {
-            //console.log(option)
-            setStockOption(option);
-            endLoading()
+            dispatch({type: 'setOption', stock: option.initCounter, inc: option.incrementNum, dec: option.decrementNum})
+            dispatch({type: 'endLoad'})
         })
     }, [])
 
+    const buyStock = () => {
+        dispatch({type: 'increment'})
+    }
+
+    const sellStock = () => {
+        dispatch({type: 'decrement'})
+    }
+
 
     return <section>
+        <h1>BuyStockFn</h1>
         <h1>How many stock you want to buy</h1>
         {
-            isLoading ? showLoading('normal') :
+            isLoading ? <h1>loading...</h1> :
                 <>
                     <button onClick={buyStock}>
                         +
                     </button>
-                    <span>{stockAmount}</span>
+                    <span>{counter}</span>
                     <button onClick={sellStock}>
                         -
                     </button>

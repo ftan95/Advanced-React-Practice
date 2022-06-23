@@ -6,6 +6,7 @@ import BuyStockClass from './components/BuyStock/BuyStockClass'
 import { useContext, useState } from 'react';
 import BuyStockFn from './components/BuyStock/BuyStockFn';
 import { CounterContext } from './context/counterContext';
+import BuyStockNumber from './components/BuyStock/BuyStockNumber';
 
 
 const pageInfo = [
@@ -42,8 +43,6 @@ function App() {
     return <CurPage patrick="patrick" />
   }
 
-
-
   return (
     <div className="App" hello="hello">
       <header className="App__header">
@@ -51,7 +50,13 @@ function App() {
           {pageInfo.map(page => {
             switch (page.pageName) {
               case "CounterClass":
-                return <a onClick={() => hanldeChangePage(page)} >{page.pageName} <CounterNumber />  </a>
+                return <a onClick={() => hanldeChangePage(page)} >
+                    {page.pageName} <CounterNumber />
+                    </a>
+              case "BuyStockClass":
+                return <a onClick={() => hanldeChangePage(page)} >
+                  {page.pageName} <BuyStockNumber />
+                  </a>
               default:
                 return <a onClick={() => hanldeChangePage(page)} >{page.pageName}</a>
             }
